@@ -7,7 +7,12 @@
     "type": "git",
     "url": "https://github.com/yourusername/cy-lint.git"
   },
-  "keywords": ["cypress", "lint", "testing", "best-practices"],
+  "keywords": [
+    "cypress",
+    "lint",
+    "testing",
+    "best-practices"
+  ],
   "author": "Maximilian Huber max_hub@gmx.net",
   "license": "Apache License Version 2.0",
   "bugs": {
@@ -18,7 +23,11 @@
     "start": "ts-node src/main.ts"
   },
   "devDependencies": {
+    "@types/yargs": "^17.0.24",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "yargs": "^17.7.1"
   }
 }
