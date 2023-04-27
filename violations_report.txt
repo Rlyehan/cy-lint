@@ -1,2 +1,0 @@
-sample_tests/example.cy.ts:6 - Avoid using hardcoded wait times
-sample_tests/example.cy.ts:7 - Use data-* attributes for selecting elements.

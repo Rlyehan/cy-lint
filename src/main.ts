@@ -69,6 +69,7 @@ function main(configPath: string, testDirectory: string) {
 
     // Display the table
     console.log(table.toString());
+    saveReportAsJson(violations, "report.json");
 }
 }
 
@@ -107,4 +108,15 @@ function analyzeTestFile(filePath: string, RuleFunctions: any[]): any[] {
   visit(sourceFile);
 
   return violations;
+}
+
+function saveReportAsJson(violations: any[], outputPath: string): void {
+  const reportData = {
+      timestamp: new Date().toISOString(),
+      violations: violations,
+  };
+
+  fs.writeFileSync(outputPath, JSON.stringify(reportData, null, 2));
+
+  console.log(`Report saved as JSON: ${outputPath}`);
 }
