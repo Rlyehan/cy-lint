@@ -1,0 +1,22 @@
+# Node.js dependencies
+node_modules
+
+# Build artifacts
+dist
+out
+
+# Log files
+*.log
+
+# Cypress test outputs
+cypress/screenshots
+cypress/videos
+
+# Editor/IDE specific files
+.vscode
+.idea
+*.iml
+
+# OS generated files
+.DS_Store
+Thumbs.db

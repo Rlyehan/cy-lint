@@ -1,0 +1,12 @@
+[
+    {
+      "id": "no-hardcoded-wait",
+      "description": "Disallow the use of hardcoded wait times.",
+      "enabled": true
+    },
+    {
+      "id": "use-data-attributes",
+      "description": "Use data-* attributes for selectors.",
+      "enabled": true
+    }
+  ]
