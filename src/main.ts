@@ -4,6 +4,7 @@ import * as ts from "typescript";
 import { Argv } from "yargs";
 const yargs = require("yargs");
 const { hideBin } = require("yargs/helpers");
+import Table from "cli-table3";
 import { ruleRegistry } from "./rulesRegistry";
 import { Rule } from "./rules";
 
@@ -54,10 +55,21 @@ function main(configPath: string, testDirectory: string) {
     console.log("No violations found");
   } else {
     console.log("Found violations:");
-    violations.forEach((violation) => {
-      console.log(violation);
+    
+    // Create a new table instance
+    const table = new Table({
+        head: ["File", "Line", "Description"],
+        colWidths: [30, 10, 60],
     });
-  }
+
+    // Add the violations to the table
+    violations.forEach((violation) => {
+        table.push([violation.filepath, violation.line, violation.description]);
+    });
+
+    // Display the table
+    console.log(table.toString());
+}
 }
 
 function parseTestFiles(directory: string): string[] {
