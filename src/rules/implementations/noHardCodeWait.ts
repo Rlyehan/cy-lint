@@ -21,4 +21,4 @@ export function noHardcodedWait(node: ts.Node, config: any): any[] {
     
     return violations;
 }
-    
+

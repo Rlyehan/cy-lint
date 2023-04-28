@@ -1,6 +1,11 @@
 {
-  "timestamp": "2023-04-27T12:06:40.721Z",
+  "timestamp": "2023-04-28T10:47:51.620Z",
   "violations": [
+    {
+      "filepath": "sample_tests/example.cy.ts",
+      "line": 4,
+      "description": "There should be at least one assertion in each it block"
+    },
     {
       "filepath": "sample_tests/example.cy.ts",
       "line": 6,
@@ -15,6 +20,86 @@
       "filepath": "sample_tests/example.cy.ts",
       "line": 7,
       "description": "Avoid using tag, class, or ID selectors. Found: '#element'"
+    },
+    {
+      "filepath": "sample_tests/example2.cy.ts",
+      "line": 2,
+      "description": "There should be at least one assertion in each it block"
+    },
+    {
+      "filepath": "sample_tests/example2.cy.ts",
+      "line": 4,
+      "description": "Use data-* attributes for selecting elements."
+    },
+    {
+      "filepath": "sample_tests/example2.cy.ts",
+      "line": 6,
+      "description": "Use data-* attributes for selecting elements."
+    },
+    {
+      "filepath": "sample_tests/example2.cy.ts",
+      "line": 7,
+      "description": "Use data-* attributes for selecting elements."
+    },
+    {
+      "filepath": "sample_tests/example2.cy.ts",
+      "line": 7,
+      "description": "Avoid using tag, class, or ID selectors. Found: 'form'"
+    },
+    {
+      "filepath": "sample_tests/example2.cy.ts",
+      "line": 10,
+      "description": "There should be at least one assertion in each it block"
+    },
+    {
+      "filepath": "sample_tests/example2.cy.ts",
+      "line": 16,
+      "description": "There should be at least one assertion in each it block"
+    },
+    {
+      "filepath": "sample_tests/example2.cy.ts",
+      "line": 17,
+      "description": "Avoid visiting external sites or servers you do not control"
+    },
+    {
+      "filepath": "sample_tests/example2.cy.ts",
+      "line": 17,
+      "description": "Use base URL from config instead of full URLs"
+    },
+    {
+      "filepath": "sample_tests/example2.cy.ts",
+      "line": 24,
+      "description": "Avoid using hardcoded credentials in tests, use environment variables or fixtures instead"
+    },
+    {
+      "filepath": "sample_tests/example2.cy.ts",
+      "line": 24,
+      "description": "Use data-* attributes for selecting elements."
+    },
+    {
+      "filepath": "sample_tests/example2.cy.ts",
+      "line": 24,
+      "description": "Avoid using tag, class, or ID selectors. Found: '#username'"
+    },
+    {
+      "filepath": "sample_tests/example2.cy.ts",
+      "line": 25,
+      "description": "Avoid using hardcoded credentials in tests, use environment variables or fixtures instead"
+    },
+    {
+      "filepath": "sample_tests/example2.cy.ts",
+      "line": 25,
+      "description": "Use data-* attributes for selecting elements."
+    },
+    {
+      "filepath": "sample_tests/example2.cy.ts",
+      "line": 25,
+      "description": "Avoid using tag, class, or ID selectors. Found: '#password'"
+    },
+    {
+      "filepath": "sample_tests/example2.cy.ts",
+      "line": 28,
+      "description": "There should be at least one assertion in each it block"
     }
   ]
 }

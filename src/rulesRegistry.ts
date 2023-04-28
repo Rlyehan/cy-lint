@@ -6,6 +6,9 @@ import { avoidCommandReturnValueAssignments } from "./rules/implementations/avoi
 import { noExternalSiteVisit } from "./rules/implementations/noExternalSiteVisit";
 import { noTestStateDependence } from "./rules/implementations/noTestStateDependence";
 import { noWebServerInCypress } from "./rules/implementations/noWebServerInCypress";
+import { atLeastOneAssertion } from "./rules/implementations/atLeastOneAssertion";
+import { useBaseUrl } from "./rules/implementations/useBaseUrl";
+import { noHardcodedCredentials } from "./rules/implementations/noHardcodedCredentials";
 
 type RuleFunction = (node: Node, config: any) => any[];
 
@@ -16,5 +19,8 @@ export const ruleRegistry: Record<string, RuleFunction> = {
   "avoid-command-return-value-assignments": avoidCommandReturnValueAssignments,
   "no-external-site-visit": noExternalSiteVisit,
   "no-test-state-dependence": noTestStateDependence,
-  "no-web-server-in-cypress": noWebServerInCypress
+  "no-web-server-in-cypress": noWebServerInCypress,
+  "at-least-one-assertion": atLeastOneAssertion,
+  "use-base-url":  useBaseUrl,
+  "no-hardcoded-credentials": noHardcodedCredentials
 };

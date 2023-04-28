@@ -33,5 +33,20 @@
       "id": "no-web-server-in-cypress",
       "description": "Avoid starting a web server from within Cypress scripts with cy.exec() or cy.task().",
       "enabled": true
-    }    
+    },
+    {
+      "id": "at-least-one-assertion",
+      "description": "There should be at least one assertion in each it block.",
+      "enabled": true
+    },
+    {
+      "id": "use-base-url",
+      "description": "Use base URL from config instead of full URLs.",
+      "enabled": true
+    },
+    {
+      "id": "no-hardcoded-credentials",
+      "description": "Avoid using hardcoded credentials in tests, use environment variables or fixtures instead.",
+      "enabled": true
+    }
   ]

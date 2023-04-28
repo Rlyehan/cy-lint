@@ -10,7 +10,7 @@ export function useDataAttributes(node: ts.Node, config: any): any[] {
     node.expression.name.getText() === "get" &&
     node.arguments.length === 1 &&
     ts.isStringLiteral(node.arguments[0]) &&
-    !node.arguments[0].text.startsWith('data-')
+    !node.arguments[0].text.includes('data-')
   ) {
     const line = ts.getLineAndCharacterOfPosition(node.getSourceFile(), node.getStart()).line + 1;
     violations.push({
