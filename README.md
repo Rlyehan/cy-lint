@@ -1,5 +1,7 @@
 # cy-lint
 
+[![CI](https://github.com/Rlyehan/cy-lint/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/Rlyehan/cy-lint/actions/workflows/main.yml)
+
 Cy-Lint is a Cypress linting tool that helps ensure your test files adhere to best practices. It analyzes your Cypress tests based on a set of rules defined in a configuration file and generates a report of any violations found.
 
 ## Getting Started
