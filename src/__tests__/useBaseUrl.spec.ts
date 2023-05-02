@@ -13,7 +13,7 @@ describe('useBaseUrl rule', () => {
 
     const violations: any[] = [];
     traverseAst(code, (node) => {
-      violations.push(...useBaseUrl(node, {}));
+      violations.push(...useBaseUrl(node));
     });
 
     expect(violations.length).toBe(0);
@@ -30,7 +30,7 @@ describe('useBaseUrl rule', () => {
 
     const violations: any[] = [];
     traverseAst(code, (node) => {
-      violations.push(...useBaseUrl(node, {}));
+      violations.push(...useBaseUrl(node));
     });
 
     expect(violations.length).toBe(1);

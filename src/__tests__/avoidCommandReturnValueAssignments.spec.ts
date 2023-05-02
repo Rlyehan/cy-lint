@@ -14,7 +14,7 @@ describe('avoidCommandReturnValueAssignments rule', () => {
 
     const violations: any[] = [];
     traverseAst(code, (node) => {
-      violations.push(...avoidCommandReturnValueAssignments(node, {}));
+      violations.push(...avoidCommandReturnValueAssignments(node));
     });
 
     expect(violations.length).toBe(0);
@@ -32,7 +32,7 @@ describe('avoidCommandReturnValueAssignments rule', () => {
 
     const violations: any[] = [];
     traverseAst(code, (node) => {
-      violations.push(...avoidCommandReturnValueAssignments(node, {}));
+      violations.push(...avoidCommandReturnValueAssignments(node));
     });
 
     expect(violations.length).toBe(1);

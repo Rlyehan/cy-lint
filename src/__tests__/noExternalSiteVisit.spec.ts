@@ -13,7 +13,7 @@ describe('noExternalSiteVisit rule', () => {
 
     const violations: any[] = [];
     traverseAst(code, (node) => {
-      violations.push(...noExternalSiteVisit(node, {}));
+      violations.push(...noExternalSiteVisit(node));
     });
 
     expect(violations.length).toBe(0);
@@ -30,7 +30,7 @@ describe('noExternalSiteVisit rule', () => {
 
     const violations: any[] = [];
     traverseAst(code, (node) => {
-      violations.push(...noExternalSiteVisit(node, {}));
+      violations.push(...noExternalSiteVisit(node));
     });
 
     expect(violations.length).toBe(1);

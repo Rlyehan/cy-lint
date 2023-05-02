@@ -17,7 +17,7 @@ describe('atLeastOneAssertionPerItBlock rule', () => {
 
     const violations: any[] = [];
     traverseAst(code, (node) => {
-      violations.push(...atLeastOneAssertion(node, {}));
+      violations.push(...atLeastOneAssertion(node));
     });
 
     expect(violations.length).toBe(0);
@@ -39,7 +39,7 @@ describe('atLeastOneAssertionPerItBlock rule', () => {
 
     const violations: any[] = [];
     traverseAst(code, (node) => {
-      violations.push(...atLeastOneAssertion(node, {}));
+      violations.push(...atLeastOneAssertion(node));
     });
 
     expect(violations.length).toBe(1);

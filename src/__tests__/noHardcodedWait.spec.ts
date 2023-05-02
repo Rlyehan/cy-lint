@@ -13,7 +13,7 @@ describe('noHardcodedWait rule', () => {
 
     const violations: any[] = [];
     traverseAst(code, (node) => {
-      violations.push(...noHardcodedWait(node, {}));
+      violations.push(...noHardcodedWait(node));
     });
 
     expect(violations.length).toBe(0);
@@ -30,7 +30,7 @@ describe('noHardcodedWait rule', () => {
 
     const violations: any[] = [];
     traverseAst(code, (node) => {
-      violations.push(...noHardcodedWait(node, {}));
+      violations.push(...noHardcodedWait(node));
     });
 
     expect(violations.length).toBe(1);

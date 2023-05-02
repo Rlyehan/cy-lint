@@ -19,7 +19,7 @@ describe('noHardcodedCredentials rule', () => {
 
     const violations: any[] = [];
     traverseAst(code, (node) => {
-      violations.push(...noHardcodedCredentials(node, {}));
+      violations.push(...noHardcodedCredentials(node));
     });
 
     expect(violations.length).toBe(0);
@@ -42,7 +42,7 @@ describe('noHardcodedCredentials rule', () => {
 
     const violations: any[] = [];
     traverseAst(code, (node) => {
-      violations.push(...noHardcodedCredentials(node, {}));
+      violations.push(...noHardcodedCredentials(node));
     });
 
     expect(violations.length).toBe(2);

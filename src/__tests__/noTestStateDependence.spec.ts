@@ -23,7 +23,7 @@ describe('no-test-state-dependence rule', () => {
 
     const violations: any[] = [];
     traverseAst(code, (node) => {
-      violations.push(...noTestStateDependence(node, {}));
+      violations.push(...noTestStateDependence(node));
     });
 
     expect(violations.length).toBe(0);
@@ -52,7 +52,7 @@ describe('no-test-state-dependence rule', () => {
 
     const violations: any[] = [];
     traverseAst(code, (node) => {
-      violations.push(...noTestStateDependence(node, {}));
+      violations.push(...noTestStateDependence(node));
     });
 
     expect(violations.length).toBe(1);

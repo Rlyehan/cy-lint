@@ -13,7 +13,7 @@ describe('avoidTagClassIdSelectors rule', () => {
 
     const violations: any[] = [];
     traverseAst(code, (node) => {
-      violations.push(...avoidTagClassIdSelectors(node, {}));
+      violations.push(...avoidTagClassIdSelectors(node));
     });
 
     expect(violations.length).toBe(0);
@@ -32,7 +32,7 @@ describe('avoidTagClassIdSelectors rule', () => {
 
     const violations: any[] = [];
     traverseAst(code, (node) => {
-      violations.push(...avoidTagClassIdSelectors(node, {}));
+      violations.push(...avoidTagClassIdSelectors(node));
     });
 
     expect(violations.length).toBe(3);

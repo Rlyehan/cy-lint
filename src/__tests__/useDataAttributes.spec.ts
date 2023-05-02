@@ -13,7 +13,7 @@ describe("useDataAttributes rule", () => {
 
     const violations = [];
     traverseAst(code, (node) => {
-      violations.push(...useDataAttributes(node, {}));
+      violations.push(...useDataAttributes(node));
     });
 
     expect(violations.length).toBe(0);
@@ -30,7 +30,7 @@ describe("useDataAttributes rule", () => {
 
     const violations: any[] = [];
     traverseAst(code, (node) => {
-      violations.push(...useDataAttributes(node, {}));
+      violations.push(...useDataAttributes(node));
     });
 
     expect(violations.length).toBe(1);

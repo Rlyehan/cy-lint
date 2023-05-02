@@ -13,7 +13,7 @@ describe('noWebServerInCypress rule', () => {
 
     const violations: any[] = [];
     traverseAst(code, (node) => {
-      violations.push(...noWebServerInCypress(node, {}));
+      violations.push(...noWebServerInCypress(node));
     });
 
     expect(violations.length).toBe(0);
@@ -31,7 +31,7 @@ describe('noWebServerInCypress rule', () => {
 
     const violations: any[] = [];
     traverseAst(code, (node) => {
-      violations.push(...noWebServerInCypress(node, {}));
+      violations.push(...noWebServerInCypress(node));
     });
 
     expect(violations.length).toBe(1);
