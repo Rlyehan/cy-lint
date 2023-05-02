@@ -33,7 +33,6 @@
   },
   "dependencies": {
     "cli-table3": "^0.6.3",
-    "commander": "^10.0.1",
-    "yargs": "^17.7.1"
+    "commander": "^10.0.1"
   }
 }
