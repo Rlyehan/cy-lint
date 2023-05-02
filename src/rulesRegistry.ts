@@ -22,6 +22,6 @@ export const ruleRegistry: Record<string, RuleFunction> = {
   "no-test-state-dependence": noTestStateDependence,
   "no-web-server-in-cypress": noWebServerInCypress,
   "at-least-one-assertion": atLeastOneAssertion,
-  "use-base-url":  useBaseUrl,
-  "no-hardcoded-credentials": noHardcodedCredentials
+  "use-base-url": useBaseUrl,
+  "no-hardcoded-credentials": noHardcodedCredentials,
 };

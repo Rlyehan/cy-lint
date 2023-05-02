@@ -1,8 +1,9 @@
-import { noHardcodedCredentials } from '../rules/implementations/noHardcodedCredentials';
-import { traverseAst } from '../test_utils';
+import { noHardcodedCredentials } from "../rules/implementations/noHardcodedCredentials";
+import { traverseAst } from "../test_utils";
+import { Violation } from "../types/violations";
 
-describe('noHardcodedCredentials rule', () => {
-  it('should pass when no hardcoded credentials are present', () => {
+describe("noHardcodedCredentials rule", () => {
+  it("should pass when no hardcoded credentials are present", () => {
     const code = `
       describe('login', () => {
         beforeEach(() => {
@@ -17,7 +18,7 @@ describe('noHardcodedCredentials rule', () => {
       });
     `;
 
-    const violations: any[] = [];
+    const violations: Violation[] = [];
     traverseAst(code, (node) => {
       violations.push(...noHardcodedCredentials(node));
     });
@@ -25,7 +26,7 @@ describe('noHardcodedCredentials rule', () => {
     expect(violations.length).toBe(0);
   });
 
-  it('should fail when hardcoded credentials are present', () => {
+  it("should fail when hardcoded credentials are present", () => {
     const code = `
       describe('login', () => {
         beforeEach(() => {
@@ -40,13 +41,17 @@ describe('noHardcodedCredentials rule', () => {
       });
     `;
 
-    const violations: any[] = [];
+    const violations: Violation[] = [];
     traverseAst(code, (node) => {
       violations.push(...noHardcodedCredentials(node));
     });
 
     expect(violations.length).toBe(2);
-    expect(violations[0].description).toBe('Avoid using hardcoded credentials in tests, use environment variables or fixtures instead');
-    expect(violations[1].description).toBe('Avoid using hardcoded credentials in tests, use environment variables or fixtures instead');
+    expect(violations[0].description).toBe(
+      "Avoid using hardcoded credentials in tests, use environment variables or fixtures instead"
+    );
+    expect(violations[1].description).toBe(
+      "Avoid using hardcoded credentials in tests, use environment variables or fixtures instead"
+    );
   });
 });

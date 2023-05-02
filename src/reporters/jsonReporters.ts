@@ -1,7 +1,10 @@
 import * as fs from "fs";
 import { Violation } from "../types/violations";
 
-export function saveReportAsJson(violations: Violation[], outputPath: string): void {
+export function saveReportAsJson(
+  violations: Violation[],
+  outputPath: string
+): void {
   const reportData = {
     timestamp: new Date().toISOString(),
     violations: violations,

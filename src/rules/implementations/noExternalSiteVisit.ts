@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import { Violation } from '../../types/violations';
+import { Violation } from "../../types/violations";
 
 export function noExternalSiteVisit(node: ts.Node): Violation[] {
   const violations: Violation[] = [];
@@ -12,15 +12,18 @@ export function noExternalSiteVisit(node: ts.Node): Violation[] {
     node.arguments.length === 1 &&
     ts.isStringLiteral(node.arguments[0])
   ) {
-    const url = node.arguments[0].getText().replace(/['"]/g, '');
+    const url = node.arguments[0].getText().replace(/['"]/g, "");
     const isExternal = /^(https?:\/\/)/.test(url);
-    
+
     if (isExternal) {
-      const line = ts.getLineAndCharacterOfPosition(node.getSourceFile(), node.getStart()).line + 1;
+      const line =
+        ts.getLineAndCharacterOfPosition(node.getSourceFile(), node.getStart())
+          .line + 1;
       violations.push({
         filepath: node.getSourceFile().fileName,
         line: line,
-        description: "Avoid visiting external sites or servers you do not control"
+        description:
+          "Avoid visiting external sites or servers you do not control",
       });
     }
   }

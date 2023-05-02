@@ -1,5 +1,5 @@
 export type Violation = {
-    filepath: string;
-    line: number;
-    description: string;
-  };  
+  filepath: string;
+  line: number;
+  description: string;
+};

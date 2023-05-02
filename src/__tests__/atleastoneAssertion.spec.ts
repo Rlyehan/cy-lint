@@ -1,8 +1,9 @@
-import { atLeastOneAssertion } from '../rules/implementations/atLeastOneAssertion';
-import { traverseAst } from '../test_utils';
+import { atLeastOneAssertion } from "../rules/implementations/atLeastOneAssertion";
+import { traverseAst } from "../test_utils";
+import { Violation } from "../types/violations";
 
-describe('atLeastOneAssertionPerItBlock rule', () => {
-  it('should pass when there is at least one assertion in each it block', () => {
+describe("atLeastOneAssertionPerItBlock rule", () => {
+  it("should pass when there is at least one assertion in each it block", () => {
     const code = `
     describe('my form', () => {
         it('displays form validation', () => {
@@ -15,7 +16,7 @@ describe('atLeastOneAssertionPerItBlock rule', () => {
       });
     `;
 
-    const violations: any[] = [];
+    const violations: Violation[] = [];
     traverseAst(code, (node) => {
       violations.push(...atLeastOneAssertion(node));
     });
@@ -23,7 +24,7 @@ describe('atLeastOneAssertionPerItBlock rule', () => {
     expect(violations.length).toBe(0);
   });
 
-  it('should fail when there is no assertion in an it block', () => {
+  it("should fail when there is no assertion in an it block", () => {
     const code = `
     describe('my form', () => {
         it('displays form validation', () => {
@@ -36,13 +37,14 @@ describe('atLeastOneAssertionPerItBlock rule', () => {
       });
     `;
 
-
-    const violations: any[] = [];
+    const violations: Violation[] = [];
     traverseAst(code, (node) => {
       violations.push(...atLeastOneAssertion(node));
     });
 
     expect(violations.length).toBe(1);
-    expect(violations[0].description).toBe('There should be at least one assertion in each it block');
+    expect(violations[0].description).toBe(
+      "There should be at least one assertion in each it block"
+    );
   });
 });

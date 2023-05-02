@@ -1,8 +1,9 @@
-import { noHardcodedWait } from '../rules/implementations/noHardCodeWait';
-import { traverseAst } from '../test_utils';
+import { noHardcodedWait } from "../rules/implementations/noHardCodeWait";
+import { traverseAst } from "../test_utils";
+import { Violation } from "../types/violations";
 
-describe('noHardcodedWait rule', () => {
-  it('should pass when no hardcoded wait is used', () => {
+describe("noHardcodedWait rule", () => {
+  it("should pass when no hardcoded wait is used", () => {
     const code = `
       describe('Test without hardcoded wait', () => {
         it('does something', () => {
@@ -11,7 +12,7 @@ describe('noHardcodedWait rule', () => {
       });
     `;
 
-    const violations: any[] = [];
+    const violations: Violation[] = [];
     traverseAst(code, (node) => {
       violations.push(...noHardcodedWait(node));
     });
@@ -19,7 +20,7 @@ describe('noHardcodedWait rule', () => {
     expect(violations.length).toBe(0);
   });
 
-  it('should fail when a hardcoded wait is used', () => {
+  it("should fail when a hardcoded wait is used", () => {
     const code = `
       describe('Test with hardcoded wait', () => {
         it('does something', () => {
@@ -28,7 +29,7 @@ describe('noHardcodedWait rule', () => {
       });
     `;
 
-    const violations: any[] = [];
+    const violations: Violation[] = [];
     traverseAst(code, (node) => {
       violations.push(...noHardcodedWait(node));
     });

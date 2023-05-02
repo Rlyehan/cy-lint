@@ -25,7 +25,10 @@ program
 
 program.parse(process.argv);
 
-export function main(configPath: string, testDirectory: string): { violations: Violation[]; message: string } {
+export function main(
+  configPath: string,
+  testDirectory: string
+): { violations: Violation[]; message: string } {
   const ruleConfig: Rule[] = JSON.parse(fs.readFileSync(configPath, "utf8"));
 
   const RuleFunctions = ruleConfig
@@ -34,33 +37,46 @@ export function main(configPath: string, testDirectory: string): { violations: V
 
   const testFiles = parseTestFiles(testDirectory);
 
-  const violations: Violation[] = testFiles.flatMap((testFile) => analyzeTestFile(testFile, RuleFunctions));
+  const violations: Violation[] = testFiles.flatMap((testFile) =>
+    analyzeTestFile(testFile, RuleFunctions)
+  );
 
-  const message = violations.length === 0 ? "No violations found" : "Found violations:";
+  const message =
+    violations.length === 0 ? "No violations found" : "Found violations:";
 
   return { violations, message };
 }
 
 function parseTestFiles(directory: string): string[] {
-  return fs.readdirSync(directory).reduce((testFiles: string[], file: string) => {
-    const filePath = path.join(directory, file);
-    const stat = fs.statSync(filePath);
+  return fs
+    .readdirSync(directory)
+    .reduce((testFiles: string[], file: string) => {
+      const filePath = path.join(directory, file);
+      const stat = fs.statSync(filePath);
 
-    if (stat.isDirectory()) {
-      return testFiles.concat(parseTestFiles(filePath));
-    } else if (file.endsWith(".cy.ts")) {
-      return testFiles.concat(filePath);
-    }
+      if (stat.isDirectory()) {
+        return testFiles.concat(parseTestFiles(filePath));
+      } else if (file.endsWith(".cy.ts")) {
+        return testFiles.concat(filePath);
+      }
 
-    return testFiles;
-  }, []);
+      return testFiles;
+    }, []);
 }
 
 type ruleFunction = (node: ts.Node) => Violation[];
 
-function analyzeTestFile(filePath: string, RuleFunctions: ruleFunction[]): Violation[] {
+function analyzeTestFile(
+  filePath: string,
+  RuleFunctions: ruleFunction[]
+): Violation[] {
   const sourceCode = fs.readFileSync(filePath, "utf8");
-  const sourceFile = ts.createSourceFile(filePath, sourceCode, ts.ScriptTarget.Latest, true);
+  const sourceFile = ts.createSourceFile(
+    filePath,
+    sourceCode,
+    ts.ScriptTarget.Latest,
+    true
+  );
 
   const violations: Violation[] = [];
 

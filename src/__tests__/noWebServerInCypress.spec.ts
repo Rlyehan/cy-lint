@@ -1,8 +1,9 @@
-import { noWebServerInCypress } from '../rules/implementations/noWebServerInCypress';
-import { traverseAst } from '../test_utils';
+import { noWebServerInCypress } from "../rules/implementations/noWebServerInCypress";
+import { traverseAst } from "../test_utils";
+import { Violation } from "../types/violations";
 
-describe('noWebServerInCypress rule', () => {
-  it('should pass when no cy.exec or cy.task is used in describe', () => {
+describe("noWebServerInCypress rule", () => {
+  it("should pass when no cy.exec or cy.task is used in describe", () => {
     const code = `
       describe('Test without cy.exec or cy.task', () => {
         it('does something', () => {
@@ -11,7 +12,7 @@ describe('noWebServerInCypress rule', () => {
       });
     `;
 
-    const violations: any[] = [];
+    const violations: Violation[] = [];
     traverseAst(code, (node) => {
       violations.push(...noWebServerInCypress(node));
     });
@@ -19,7 +20,7 @@ describe('noWebServerInCypress rule', () => {
     expect(violations.length).toBe(0);
   });
 
-  it('should fail when cy.exec or cy.task is used in describe', () => {
+  it("should fail when cy.exec or cy.task is used in describe", () => {
     const code = `
       describe('Test with cy.exec or cy.task', () => {
         it('does something', () => {
@@ -29,12 +30,14 @@ describe('noWebServerInCypress rule', () => {
       });
     `;
 
-    const violations: any[] = [];
+    const violations: Violation[] = [];
     traverseAst(code, (node) => {
       violations.push(...noWebServerInCypress(node));
     });
 
     expect(violations.length).toBe(1);
-    expect(violations[0].description).toBe("Do not start a web server from within Cypress scripts with cy.exec() or cy.task()");
+    expect(violations[0].description).toBe(
+      "Do not start a web server from within Cypress scripts with cy.exec() or cy.task()"
+    );
   });
 });

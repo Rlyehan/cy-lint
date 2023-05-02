@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import { Violation } from '../../types/violations';
+import { Violation } from "../../types/violations";
 
 export function avoidTagClassIdSelectors(node: ts.Node): Violation[] {
   const violations: Violation[] = [];

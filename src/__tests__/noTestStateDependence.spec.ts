@@ -1,8 +1,9 @@
-import { noTestStateDependence } from '../rules/implementations/noTestStateDependence';
-import { traverseAst } from '../test_utils';
+import { noTestStateDependence } from "../rules/implementations/noTestStateDependence";
+import { traverseAst } from "../test_utils";
+import { Violation } from "../types/violations";
 
-describe('no-test-state-dependence rule', () => {
-  it('should pass when tests do not rely on previous tests', () => {
+describe("no-test-state-dependence rule", () => {
+  it("should pass when tests do not rely on previous tests", () => {
     const code = `
       describe('my form', () => {
         beforeEach(() => {
@@ -21,7 +22,7 @@ describe('no-test-state-dependence rule', () => {
       });
     `;
 
-    const violations: any[] = [];
+    const violations: Violation[] = [];
     traverseAst(code, (node) => {
       violations.push(...noTestStateDependence(node));
     });
@@ -29,7 +30,7 @@ describe('no-test-state-dependence rule', () => {
     expect(violations.length).toBe(0);
   });
 
-  it('should fail when tests rely on previous tests', () => {
+  it("should fail when tests rely on previous tests", () => {
     const code = `
       describe('my form', () => {
         it('visits the form', () => {
@@ -50,12 +51,14 @@ describe('no-test-state-dependence rule', () => {
       });
     `;
 
-    const violations: any[] = [];
+    const violations: Violation[] = [];
     traverseAst(code, (node) => {
       violations.push(...noTestStateDependence(node));
     });
 
     expect(violations.length).toBe(1);
-    expect(violations[0].description).toBe('Avoid having tests rely on the state of previous tests');
+    expect(violations[0].description).toBe(
+      "Avoid having tests rely on the state of previous tests"
+    );
   });
 });

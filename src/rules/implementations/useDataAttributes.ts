@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import { Violation } from '../../types/violations';
+import { Violation } from "../../types/violations";
 
 export function useDataAttributes(node: ts.Node): Violation[] {
   const violations: Violation[] = [];
@@ -11,9 +11,11 @@ export function useDataAttributes(node: ts.Node): Violation[] {
     node.expression.name.getText() === "get" &&
     node.arguments.length === 1 &&
     ts.isStringLiteral(node.arguments[0]) &&
-    !node.arguments[0].text.includes('data-')
+    !node.arguments[0].text.includes("data-")
   ) {
-    const line = ts.getLineAndCharacterOfPosition(node.getSourceFile(), node.getStart()).line + 1;
+    const line =
+      ts.getLineAndCharacterOfPosition(node.getSourceFile(), node.getStart())
+        .line + 1;
     violations.push({
       filepath: node.getSourceFile().fileName,
       line: line,
