@@ -1,4 +1,5 @@
 import * as ts from 'typescript';
+import { Violation } from '../../types/violations';
 
 function isAssertion(node: ts.Node): boolean {
   if (
@@ -20,8 +21,8 @@ function isAssertion(node: ts.Node): boolean {
   return false;
 }
 
-export function atLeastOneAssertion(node: ts.Node, config: any): any[] {
-  const violations: any[] = [];
+export function atLeastOneAssertion(node: ts.Node): Violation[] {
+  const violations: Violation[] = [];
 
   if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === 'it') {
     const [, callback] = node.arguments;

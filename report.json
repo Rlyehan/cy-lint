@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-04-28T10:47:51.620Z",
+  "timestamp": "2023-05-01T07:04:23.633Z",
   "violations": [
     {
       "filepath": "sample_tests/example.cy.ts",
@@ -25,16 +25,6 @@
       "filepath": "sample_tests/example2.cy.ts",
       "line": 2,
       "description": "There should be at least one assertion in each it block"
-    },
-    {
-      "filepath": "sample_tests/example2.cy.ts",
-      "line": 4,
-      "description": "Use data-* attributes for selecting elements."
-    },
-    {
-      "filepath": "sample_tests/example2.cy.ts",
-      "line": 6,
-      "description": "Use data-* attributes for selecting elements."
     },
     {
       "filepath": "sample_tests/example2.cy.ts",

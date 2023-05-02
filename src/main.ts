@@ -4,9 +4,11 @@ import * as ts from "typescript";
 import { Argv } from "yargs";
 const yargs = require("yargs");
 const { hideBin } = require("yargs/helpers");
-import Table from "cli-table3";
 import { ruleRegistry } from "./rulesRegistry";
-import { Rule } from "./rules";
+import { Rule } from "./types/rules";
+import { Violation } from "./types/violations";
+import { printCliReport } from "./reporters/cliReporters";
+import { saveReportAsJson } from "./reporters/jsonReporters";
 
 yargs(hideBin(process.argv))
 .command(
@@ -45,7 +47,7 @@ function main(configPath: string, testDirectory: string) {
 
   const testFiles = parseTestFiles(testDirectory);
 
-  const violations: any[] = [];
+  const violations: Violation[] = [];
 
   testFiles.forEach((testFile) => {
     violations.push(...analyzeTestFile(testFile, RuleFunctions));
@@ -55,20 +57,7 @@ function main(configPath: string, testDirectory: string) {
     console.log("No violations found");
   } else {
     console.log("Found violations:");
-    
-    // Create a new table instance
-    const table = new Table({
-        head: ["File", "Line", "Description"],
-        colWidths: [30, 10, 60],
-    });
-
-    // Add the violations to the table
-    violations.forEach((violation) => {
-        table.push([violation.filepath, violation.line, violation.description]);
-    });
-
-    // Display the table
-    console.log(table.toString());
+    printCliReport(violations);
     saveReportAsJson(violations, "report.json");
 }
 }
@@ -91,11 +80,11 @@ function parseTestFiles(directory: string): string[] {
   return testFiles;
 }
 
-function analyzeTestFile(filePath: string, RuleFunctions: any[]): any[] {
+function analyzeTestFile(filePath: string, RuleFunctions: any[]): Violation[] {
   const sourceCode = fs.readFileSync(filePath, "utf8");
   const sourceFile = ts.createSourceFile(filePath, sourceCode, ts.ScriptTarget.Latest, true);
 
-  const violations: any[] = [];
+  const violations: Violation[] = [];
 
   function visit(node: ts.Node) {
     RuleFunctions.forEach((RuleFunction) => {
@@ -108,15 +97,4 @@ function analyzeTestFile(filePath: string, RuleFunctions: any[]): any[] {
   visit(sourceFile);
 
   return violations;
-}
-
-function saveReportAsJson(violations: any[], outputPath: string): void {
-  const reportData = {
-      timestamp: new Date().toISOString(),
-      violations: violations,
-  };
-
-  fs.writeFileSync(outputPath, JSON.stringify(reportData, null, 2));
-
-  console.log(`Report saved as JSON: ${outputPath}`);
 }

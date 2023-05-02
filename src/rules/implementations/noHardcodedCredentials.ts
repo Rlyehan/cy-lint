@@ -1,4 +1,5 @@
 import * as ts from 'typescript';
+import { Violation } from '../../types/violations';
 
 function isHardcodedCredentials(node: ts.Node): boolean {
   if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression)) {
@@ -24,8 +25,8 @@ function isHardcodedCredentials(node: ts.Node): boolean {
   return false;
 }
 
-export function noHardcodedCredentials(node: ts.Node, config: any): any[] {
-  const violations: any[] = [];
+export function noHardcodedCredentials(node: ts.Node): Violation[] {
+  const violations: Violation[] = [];
 
   if (isHardcodedCredentials(node)) {
     const line = ts.getLineAndCharacterOfPosition(node.getSourceFile(), node.getStart()).line + 1;

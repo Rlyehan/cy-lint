@@ -1,4 +1,6 @@
 import * as ts from "typescript";
+import { Violation } from '../../types/violations';
+
 
 function hasBeforeEach(node: ts.Node): boolean {
   if (ts.isCallExpression(node) && ts.isIdentifier(node.expression)) {
@@ -23,8 +25,8 @@ function hasBeforeEachInChildren(node: ts.Node): boolean {
   return hasBeforeEachHook;
 }
 
-export function noTestStateDependence(node: ts.Node, config: any): any[] {
-  const violations: any[] = [];
+export function noTestStateDependence(node: ts.Node): Violation[] {
+  const violations: Violation[] = [];
 
   if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === 'describe') {
     const [, callback] = node.arguments;

@@ -1,4 +1,6 @@
 import * as ts from "typescript";
+import { Violation } from '../../types/violations';
+
 
 function findCyExecOrTask(node: ts.Node): ts.CallExpression[] {
   const cyExecOrTaskCalls: ts.CallExpression[] = [];
@@ -25,8 +27,8 @@ function findCyExecOrTaskRecursively(node: ts.Node): ts.CallExpression[] {
   return calls;
 }
 
-export function noWebServerInCypress(node: ts.Node, config: any): any[] {
-  const violations: any[] = [];
+export function noWebServerInCypress(node: ts.Node): Violation[] {
+  const violations: Violation[] = [];
 
   if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === 'describe') {
     const [, callback] = node.arguments;

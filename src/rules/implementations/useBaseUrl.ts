@@ -1,12 +1,13 @@
 import * as ts from 'typescript';
+import { Violation } from '../../types/violations';
 
 function isFullUrl(url: string): boolean {
   const regex = new RegExp(/^(https?:\/\/|\/\/)/);
   return regex.test(url);
 }
 
-export function useBaseUrl(node: ts.Node, config: any): any[] {
-  const violations: any[] = [];
+export function useBaseUrl(node: ts.Node): Violation[] {
+  const violations: Violation[] = [];
 
   if (
     ts.isCallExpression(node) &&

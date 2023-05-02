@@ -1,7 +1,8 @@
 import * as ts from "typescript";
+import { Violation } from '../../types/violations';
 
-export function avoidCommandReturnValueAssignments(node: ts.Node, config: any): any[] {
-  const violations: any[] = [];
+export function avoidCommandReturnValueAssignments(node: ts.Node): Violation[] {
+  const violations: Violation[] = [];
 
   if (
     ts.isVariableDeclaration(node) &&

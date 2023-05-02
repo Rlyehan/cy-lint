@@ -9,8 +9,9 @@ import { noWebServerInCypress } from "./rules/implementations/noWebServerInCypre
 import { atLeastOneAssertion } from "./rules/implementations/atLeastOneAssertion";
 import { useBaseUrl } from "./rules/implementations/useBaseUrl";
 import { noHardcodedCredentials } from "./rules/implementations/noHardcodedCredentials";
+import { Violation } from "./types/violations";
 
-type RuleFunction = (node: Node, config: any) => any[];
+type RuleFunction = (node: Node) => Violation[];
 
 export const ruleRegistry: Record<string, RuleFunction> = {
   "no-hardcoded-wait": noHardcodedWait,
