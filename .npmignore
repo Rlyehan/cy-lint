@@ -1,0 +1,8 @@
+# ignore TypeScript source files
+src/
+
+# ignore tests
+**/*.spec.ts
+
+# ignore TypeScript compiler output directory
+dist/

@@ -5,7 +5,7 @@
   "main": "src/main.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/cy-lint.git"
+    "url": "https://github.com/Rlyehan/cy-lint.git"
   },
   "keywords": [
     "cypress",
@@ -13,14 +13,15 @@
     "testing",
     "best-practices"
   ],
-  "author": "Maximilian Huber max_hub@gmx.net",
+  "author": "Maximilian Huber",
   "license": "Apache License Version 2.0",
   "bugs": {
-    "url": "https://github.com/yourusername/cy-lint/issues"
+    "url": "https://github.com/Rlyehan/cy-lint/issues"
   },
-  "homepage": "https://github.com/yourusername/cy-lint#readme",
+  "homepage": "https://github.com/Rlyehan/cy-lint#readme",
   "scripts": {
     "start": "ts-node src/main.ts",
+    "build": "tsc",
     "test": "jest",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write .",

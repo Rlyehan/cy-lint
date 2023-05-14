@@ -7,35 +7,41 @@ import { Rule } from "./types/rules";
 import { Violation } from "./types/violations";
 import { printCliReport } from "./reporters/cliReporters";
 import { saveReportAsJson } from "./reporters/jsonReporters";
+import { Config } from "./types/config";
+
+const DEFAULT_CONFIG_FILE_NAME = '.cylintrc.json';
 
 const program = new Command();
 
 program
-  .arguments("<config> [testDirectory]")
-  .description("Analyze Cypress tests using the provided configuration file")
-  .action((config: string, testDirectory = "./") => {
-    const { violations, message } = main(config, testDirectory);
+  .description('Analyze Cypress tests using the provided configuration file')
+  .action(() => {
+    const configPath = findConfigFile(process.cwd(), DEFAULT_CONFIG_FILE_NAME);
+
+    if (!configPath) {
+      console.error('Configuration file not found.');
+      process.exit(1);
+    }
+
+    const { violations, message } = main(configPath);
     console.log(message);
 
     if (violations.length > 0) {
       printCliReport(violations);
-      saveReportAsJson(violations, "report.json");
+      saveReportAsJson(violations, 'report.json');
     }
   });
 
 program.parse(process.argv);
 
-export function main(
-  configPath: string,
-  testDirectory: string
-): { violations: Violation[]; message: string } {
-  const ruleConfig: Rule[] = JSON.parse(fs.readFileSync(configPath, "utf8"));
-
-  const RuleFunctions = ruleConfig
+export function main(configPath: string): { violations: Violation[]; message: string } {
+  const config: Config = JSON.parse(fs.readFileSync(configPath, "utf8"));
+  
+  const RuleFunctions = config.rules
     .filter((rule: Rule) => rule.enabled)
     .map((rule: Rule) => ruleRegistry[rule.id]);
 
-  const testFiles = parseTestFiles(testDirectory);
+  const testFiles = parseTestFiles(config.testDirectory);
 
   const violations: Violation[] = testFiles.flatMap((testFile) =>
     analyzeTestFile(testFile, RuleFunctions)
@@ -91,4 +97,28 @@ function analyzeTestFile(
   visit(sourceFile);
 
   return violations;
+}
+
+function findConfigFile(startPath: string, configFile: string): string | null {
+  let currentPath = startPath;
+
+  while (true) {
+    const filePath = path.join(currentPath, configFile);
+
+    console.log(`Looking for config file in: ${currentPath}`);  // Add this line
+
+    if (fs.existsSync(filePath)) {
+      return filePath;
+    }
+
+    const parentPath = path.dirname(currentPath);
+
+    if (parentPath === currentPath) {
+      break;
+    }
+
+    currentPath = parentPath;
+  }
+
+  return null;
 }
