@@ -9,17 +9,17 @@ import { printCliReport } from "./reporters/cliReporters";
 import { saveReportAsJson } from "./reporters/jsonReporters";
 import { Config } from "./types/config";
 
-const DEFAULT_CONFIG_FILE_NAME = '.cylintrc.json';
+const DEFAULT_CONFIG_FILE_NAME = ".cylintrc.json";
 
 const program = new Command();
 
 program
-  .description('Analyze Cypress tests using the provided configuration file')
+  .description("Analyze Cypress tests using the provided configuration file")
   .action(() => {
     const configPath = findConfigFile(process.cwd(), DEFAULT_CONFIG_FILE_NAME);
 
     if (!configPath) {
-      console.error('Configuration file not found.');
+      console.error("Configuration file not found.");
       process.exit(1);
     }
 
@@ -28,15 +28,18 @@ program
 
     if (violations.length > 0) {
       printCliReport(violations);
-      saveReportAsJson(violations, 'report.json');
+      saveReportAsJson(violations, "report.json");
     }
   });
 
 program.parse(process.argv);
 
-export function main(configPath: string): { violations: Violation[]; message: string } {
+export function main(configPath: string): {
+  violations: Violation[];
+  message: string;
+} {
   const config: Config = JSON.parse(fs.readFileSync(configPath, "utf8"));
-  
+
   const RuleFunctions = config.rules
     .filter((rule: Rule) => rule.enabled)
     .map((rule: Rule) => ruleRegistry[rule.id]);
@@ -101,23 +104,24 @@ function analyzeTestFile(
 
 function findConfigFile(startPath: string, configFile: string): string | null {
   let currentPath = startPath;
+  let parentPath = path.dirname(currentPath);
 
-  while (true) {
+  while (currentPath !== parentPath) {
     const filePath = path.join(currentPath, configFile);
 
-    console.log(`Looking for config file in: ${currentPath}`);  // Add this line
+    console.log(`Looking for config file in: ${currentPath}`);
 
     if (fs.existsSync(filePath)) {
       return filePath;
     }
 
-    const parentPath = path.dirname(currentPath);
-
-    if (parentPath === currentPath) {
-      break;
-    }
-
     currentPath = parentPath;
+    parentPath = path.dirname(currentPath);
+  }
+
+  const filePath = path.join(currentPath, configFile);
+  if (fs.existsSync(filePath)) {
+    return filePath;
   }
 
   return null;

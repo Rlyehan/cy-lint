@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const avoidCommandReturnValueAssignments_1 = require("../rules/implementations/avoidCommandReturnValueAssignments");
 const test_utils_1 = require("../test_utils");
 describe("avoidCommandReturnValueAssignments rule", () => {
-    it("should pass when no command return value assignments are present", () => {
-        const code = `
+  it("should pass when no command return value assignments are present", () => {
+    const code = `
       describe('Test without command return value assignments', () => {
         it('does something', () => {
           cy.visit('/users');
@@ -12,14 +12,19 @@ describe("avoidCommandReturnValueAssignments rule", () => {
         });
       });
     `;
-        const violations = [];
-        (0, test_utils_1.traverseAst)(code, (node) => {
-            violations.push(...(0, avoidCommandReturnValueAssignments_1.avoidCommandReturnValueAssignments)(node));
-        });
-        expect(violations.length).toBe(0);
+    const violations = [];
+    (0, test_utils_1.traverseAst)(code, (node) => {
+      violations.push(
+        ...(0,
+        avoidCommandReturnValueAssignments_1.avoidCommandReturnValueAssignments)(
+          node
+        )
+      );
     });
-    it("should fail when command return value assignments are present", () => {
-        const code = `
+    expect(violations.length).toBe(0);
+  });
+  it("should fail when command return value assignments are present", () => {
+    const code = `
       describe('Test with command return value assignments', () => {
         it('does something', () => {
           const element = cy.get('#username');
@@ -27,11 +32,18 @@ describe("avoidCommandReturnValueAssignments rule", () => {
         });
       });
     `;
-        const violations = [];
-        (0, test_utils_1.traverseAst)(code, (node) => {
-            violations.push(...(0, avoidCommandReturnValueAssignments_1.avoidCommandReturnValueAssignments)(node));
-        });
-        expect(violations.length).toBe(1);
-        expect(violations[0].description).toBe("Avoid assigning the return value of Cypress commands with const, let, or var");
+    const violations = [];
+    (0, test_utils_1.traverseAst)(code, (node) => {
+      violations.push(
+        ...(0,
+        avoidCommandReturnValueAssignments_1.avoidCommandReturnValueAssignments)(
+          node
+        )
+      );
     });
+    expect(violations.length).toBe(1);
+    expect(violations[0].description).toBe(
+      "Avoid assigning the return value of Cypress commands with const, let, or var"
+    );
+  });
 });

@@ -1,5 +1,5 @@
-import { Rule } from "./rules"
+import { Rule } from "./rules";
 export interface Config {
-    testDirectory: string;
-    rules: Rule[];
+  testDirectory: string;
+  rules: Rule[];
 }
