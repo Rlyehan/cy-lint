@@ -7,19 +7,25 @@ export function avoidCommandReturnValueAssignments(node: ts.Node): Violation[] {
   if (
     ts.isVariableDeclaration(node) &&
     node.initializer &&
-    ts.isCallExpression(node.initializer) &&
-    ts.isPropertyAccessExpression(node.initializer.expression) &&
-    node.initializer.expression.expression.getText() === "cy"
+    ts.isCallExpression(node.initializer)
   ) {
-    const line =
-      ts.getLineAndCharacterOfPosition(node.getSourceFile(), node.getStart())
-        .line + 1;
-    violations.push({
-      filepath: node.getSourceFile().fileName,
-      line: line,
-      description:
-        "Avoid assigning the return value of Cypress commands with const, let, or var",
-    });
+    const callExpression = node.initializer;
+
+    if (
+      ts.isPropertyAccessExpression(callExpression.expression) &&
+      callExpression.expression.expression.getText() === "cy"
+    ) {
+      const sourceFile = node.getSourceFile();
+      const line =
+        ts.getLineAndCharacterOfPosition(sourceFile, node.getStart()).line + 1;
+
+      violations.push({
+        filepath: sourceFile.fileName,
+        line: line,
+        description:
+          "Avoid assigning the return value of Cypress commands with const, let, or var",
+      });
+    }
   }
 
   return violations;

@@ -1,41 +1,6 @@
 import * as ts from "typescript";
 import { Violation } from "../../types/violations";
 
-function isAssertion(node: ts.Node): boolean {
-  if (
-    ts.isCallExpression(node) &&
-    ts.isPropertyAccessExpression(node.expression) &&
-    node.expression.name.text === "should"
-  ) {
-    return true;
-  }
-
-  if (
-    ts.isCallExpression(node) &&
-    ts.isIdentifier(node.expression) &&
-    node.expression.text === "expect"
-  ) {
-    return true;
-  }
-
-  return false;
-}
-
-function hasAssertionsInNode(
-  node: ts.Node,
-  check: (node: ts.Node) => boolean
-): boolean {
-  let hasAssertion = false;
-
-  ts.forEachChild(node, (child) => {
-    if (check(child) || hasAssertionsInNode(child, check)) {
-      hasAssertion = true;
-    }
-  });
-
-  return hasAssertion;
-}
-
 export function atLeastOneAssertion(node: ts.Node): Violation[] {
   const violations: Violation[] = [];
 
@@ -66,4 +31,33 @@ export function atLeastOneAssertion(node: ts.Node): Violation[] {
   }
 
   return violations;
+}
+
+function isAssertion(node: ts.Node): boolean {
+  if (!ts.isCallExpression(node)) return false;
+
+  if (
+    ts.isPropertyAccessExpression(node.expression) &&
+    node.expression.name.text === "should"
+  ) {
+    return true;
+  }
+
+  if (
+    ts.isIdentifier(node.expression) &&
+    node.expression.text === "expect"
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function hasAssertionsInNode(
+  node: ts.Node,
+  check: (node: ts.Node) => boolean
+): boolean {
+  return ts.forEachChild(node, child => 
+    check(child) || hasAssertionsInNode(child, check)
+  ) ?? false;
 }
