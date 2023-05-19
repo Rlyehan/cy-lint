@@ -22,14 +22,13 @@ npm install
 3. Run the linter on your test files:
 
 ```
-npm start -- ./src/rules/rules.json /path/to/your/test/files
+npm start 
 ```
-
-Replace `/path/to/your/test/files` with the path to your Cypress test files.
 
 ## Configuration
 
-The rules are defined in a JSON file. The default configuration is located at `src/rules/rules.json`. You can customize the rules by creating your own configuration file and passing its path when running the linter.
+The rules are defined in a .cylintrc.json configuration file. This file should be located at the root of your project or any subdirectory.
+In there you can select wich rules should be active and also define teh path to your test scripts.
 
 ## Creating new rules
 
