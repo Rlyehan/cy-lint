@@ -45,17 +45,16 @@ export function noWebServerInCypress(node: ts.Node): Violation[] {
   }
 
   const cyExecOrTaskCalls = findCyExecOrTaskRecursively(callback.body);
-  
+
   for (const cyCall of cyExecOrTaskCalls) {
     const line =
-      ts.getLineAndCharacterOfPosition(
-        node.getSourceFile(),
-        cyCall.getStart()
-      ).line + 1;
+      ts.getLineAndCharacterOfPosition(node.getSourceFile(), cyCall.getStart())
+        .line + 1;
     violations.push({
       filepath: node.getSourceFile().fileName,
       line: line,
-      description: "Do not start a web server from within Cypress scripts with cy.exec() or cy.task()",
+      description:
+        "Do not start a web server from within Cypress scripts with cy.exec() or cy.task()",
     });
   }
 

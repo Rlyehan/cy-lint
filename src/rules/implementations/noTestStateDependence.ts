@@ -2,7 +2,11 @@ import * as ts from "typescript";
 import { Violation } from "../../types/violations";
 
 function hasBeforeEach(node: ts.Node): boolean {
-  return ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "beforeEach";
+  return (
+    ts.isCallExpression(node) &&
+    ts.isIdentifier(node.expression) &&
+    node.expression.text === "beforeEach"
+  );
 }
 
 function hasBeforeEachInChildren(node: ts.Node): boolean {
@@ -53,10 +57,8 @@ export function noTestStateDependence(node: ts.Node): Violation[] {
 
   if (itCalls.length > 1 && !hasBeforeEachHook) {
     const line =
-      ts.getLineAndCharacterOfPosition(
-        node.getSourceFile(),
-        node.getStart()
-      ).line + 1;
+      ts.getLineAndCharacterOfPosition(node.getSourceFile(), node.getStart())
+        .line + 1;
     violations.push({
       filepath: node.getSourceFile().fileName,
       line: line,

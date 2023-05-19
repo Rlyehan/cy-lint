@@ -43,10 +43,7 @@ function isAssertion(node: ts.Node): boolean {
     return true;
   }
 
-  if (
-    ts.isIdentifier(node.expression) &&
-    node.expression.text === "expect"
-  ) {
+  if (ts.isIdentifier(node.expression) && node.expression.text === "expect") {
     return true;
   }
 
@@ -57,7 +54,10 @@ function hasAssertionsInNode(
   node: ts.Node,
   check: (node: ts.Node) => boolean
 ): boolean {
-  return ts.forEachChild(node, child => 
-    check(child) || hasAssertionsInNode(child, check)
-  ) ?? false;
+  return (
+    ts.forEachChild(
+      node,
+      (child) => check(child) || hasAssertionsInNode(child, check)
+    ) ?? false
+  );
 }

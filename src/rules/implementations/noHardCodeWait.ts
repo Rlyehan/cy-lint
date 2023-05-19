@@ -4,7 +4,10 @@ import { Violation } from "../../types/violations";
 export function noHardcodedWait(node: ts.Node): Violation[] {
   const violations: Violation[] = [];
 
-  if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression)) {
+  if (
+    ts.isCallExpression(node) &&
+    ts.isPropertyAccessExpression(node.expression)
+  ) {
     const callExp = node.expression;
     if (
       callExp.expression.getText() === "cy" &&

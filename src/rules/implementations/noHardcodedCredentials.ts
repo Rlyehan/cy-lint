@@ -48,12 +48,16 @@ function isHardcodedCredentials(node: ts.Node): boolean {
 }
 
 function isHardcodedStringVariable(node: ts.Node): boolean {
-  if (!ts.isVariableDeclaration(node) || !ts.isIdentifier(node.name) || !node.initializer) {
+  if (
+    !ts.isVariableDeclaration(node) ||
+    !ts.isIdentifier(node.name) ||
+    !node.initializer
+  ) {
     return false;
   }
 
   const variableName = node.name.text;
-  const targetNames = ['username', 'password'];
+  const targetNames = ["username", "password"];
   if (!targetNames.includes(variableName)) {
     return false;
   }
@@ -64,7 +68,8 @@ function isHardcodedStringVariable(node: ts.Node): boolean {
 export function noHardcodedCredentials(node: ts.Node): Violation[] {
   const violations: Violation[] = [];
   const sourceFile = node.getSourceFile();
-  const line = ts.getLineAndCharacterOfPosition(sourceFile, node.getStart()).line + 1;
+  const line =
+    ts.getLineAndCharacterOfPosition(sourceFile, node.getStart()).line + 1;
 
   if (isHardcodedCredentials(node) || isHardcodedStringVariable(node)) {
     violations.push({

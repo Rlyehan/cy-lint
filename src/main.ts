@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import * as fs from "fs";
 import * as path from "path";
 import * as ts from "typescript";
@@ -10,25 +12,34 @@ import { saveReportAsJson } from "./reporters/jsonReporters";
 import { Config } from "./types/config";
 
 const DEFAULT_CONFIG_FILE_NAME = ".cylintrc.json";
+const TEST_FILE_EXTENSION = ".cy.ts";
 
 const program = new Command();
 
 program
   .description("Analyze Cypress tests using the provided configuration file")
   .action(() => {
-    const configPath = findConfigFile(process.cwd(), DEFAULT_CONFIG_FILE_NAME);
+    try {
+      const configPath = findConfigFile(
+        process.cwd(),
+        DEFAULT_CONFIG_FILE_NAME
+      );
 
-    if (!configPath) {
-      console.error("Configuration file not found.");
+      if (!configPath) {
+        console.error("Configuration file not found.");
+        process.exit(1);
+      }
+
+      const { violations, message } = main(configPath);
+      console.log(message);
+
+      if (violations.length > 0) {
+        printCliReport(violations);
+        saveReportAsJson(violations, "report.json");
+      }
+    } catch (error: any) {
+      console.error(`An error occurred: ${error.message}`);
       process.exit(1);
-    }
-
-    const { violations, message } = main(configPath);
-    console.log(message);
-
-    if (violations.length > 0) {
-      printCliReport(violations);
-      saveReportAsJson(violations, "report.json");
     }
   });
 
@@ -38,7 +49,12 @@ export function main(configPath: string): {
   violations: Violation[];
   message: string;
 } {
-  const config: Config = JSON.parse(fs.readFileSync(configPath, "utf8"));
+  let config: Config;
+  try {
+    config = JSON.parse(fs.readFileSync(configPath, "utf8"));
+  } catch (error: any) {
+    throw new Error(`Failed to parse config file: ${error.message}`);
+  }
 
   const RuleFunctions = config.rules
     .filter((rule: Rule) => rule.enabled)
@@ -65,7 +81,7 @@ function parseTestFiles(directory: string): string[] {
 
       if (stat.isDirectory()) {
         return testFiles.concat(parseTestFiles(filePath));
-      } else if (file.endsWith(".cy.ts")) {
+      } else if (file.endsWith(TEST_FILE_EXTENSION)) {
         return testFiles.concat(filePath);
       }
 
@@ -79,7 +95,13 @@ function analyzeTestFile(
   filePath: string,
   RuleFunctions: ruleFunction[]
 ): Violation[] {
-  const sourceCode = fs.readFileSync(filePath, "utf8");
+  let sourceCode;
+  try {
+    sourceCode = fs.readFileSync(filePath, "utf8");
+  } catch (error: any) {
+    throw new Error(`Failed to read test file: ${error.message}`);
+  }
+
   const sourceFile = ts.createSourceFile(
     filePath,
     sourceCode,
@@ -108,8 +130,6 @@ function findConfigFile(startPath: string, configFile: string): string | null {
 
   while (currentPath !== parentPath) {
     const filePath = path.join(currentPath, configFile);
-
-    console.log(`Looking for config file in: ${currentPath}`);
 
     if (fs.existsSync(filePath)) {
       return filePath;
