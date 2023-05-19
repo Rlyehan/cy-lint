@@ -22,7 +22,7 @@ npm install
 3. Run the linter on your test files:
 
 ```
-npm start 
+npm start
 ```
 
 ## Configuration
