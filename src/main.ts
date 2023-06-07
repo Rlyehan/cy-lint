@@ -45,8 +45,8 @@ program
   });
 
 program
-  .command('init [path]')
-  .description('Create a configuration file.')
+  .command("init [path]")
+  .description("Create a configuration file.")
   .action((path = process.cwd()) => {
     const configPath = `${path}/${DEFAULT_CONFIG_FILE_NAME}`;
     if (fs.existsSync(configPath)) {
@@ -55,14 +55,18 @@ program
     }
 
     try {
-      fs.writeFileSync(configPath, JSON.stringify(templateConfig, null, 2), 'utf8');
-      console.log('Created a sample config file at.');
+      fs.writeFileSync(
+        configPath,
+        JSON.stringify(templateConfig, null, 2),
+        "utf8"
+      );
+      console.log("Created a sample config file at.");
     } catch (error: any) {
-      console.error('Failed to create config file: ${error.message}');
+      console.error("Failed to create config file: ${error.message}");
       process.exit(1);
     }
   });
-  
+
 program.parse(process.argv);
 
 export function main(configPath: string): {
