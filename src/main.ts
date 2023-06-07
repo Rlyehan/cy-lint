@@ -10,6 +10,7 @@ import { Violation } from "./types/violations";
 import { printCliReport } from "./reporters/cliReporters";
 import { saveReportAsJson } from "./reporters/jsonReporters";
 import { Config } from "./types/config";
+import { templateConfig } from "./utils/templateConfig";
 
 const DEFAULT_CONFIG_FILE_NAME = ".cylintrc.json";
 const TEST_FILE_EXTENSION = ".cy.ts";
@@ -43,6 +44,25 @@ program
     }
   });
 
+program
+  .command('init [path]')
+  .description('Create a configuration file.')
+  .action((path = process.cwd()) => {
+    const configPath = `${path}/${DEFAULT_CONFIG_FILE_NAME}`;
+    if (fs.existsSync(configPath)) {
+      console.error("config file already exists.");
+      process.exit(1);
+    }
+
+    try {
+      fs.writeFileSync(configPath, JSON.stringify(templateConfig, null, 2), 'utf8');
+      console.log('Created a sample config file at.');
+    } catch (error: any) {
+      console.error('Failed to create config file: ${error.message}');
+      process.exit(1);
+    }
+  });
+  
 program.parse(process.argv);
 
 export function main(configPath: string): {
