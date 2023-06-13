@@ -4,30 +4,28 @@
 
 Cy-Lint is a Cypress linting tool that helps ensure your test files adhere to best practices. It analyzes your Cypress tests based on a set of rules defined in a configuration file and generates a report of any violations found.
 
-## Getting Started
+Cy-Lint is a Cypress linting tool that helps ensure your test files adhere to best practices. It analyzes your Cypress tests based on a set of rules defined in a configuration file and generates a report of any violations found`
 
-1. Clone this repository:
+## Installation
 
-```
-git clone https://github.com/yourusername/cy-lint.git
-```
+To install Cy-Lint as a CLI tool, use:
 
-2. Install the dependencies:
-
-```
-cd cy-lint
-npm install
+```bash
+npm install cy-lint
 ```
 
-3. Run the linter on your test files:
+## Usage
 
-```
-npm start
-```
+You can run the linter on your test files with:
+`cylint`
+
+If your configuration file is not found, you can create a sample configuration file using the init command:
+`cylint init [directory]`
+Where [directory] is the directory where you want to create the config file. If not specified, the current directory will be used.
 
 ## Configuration
 
-The rules are defined in a .cylintrc.json configuration file. This file should be located at the root of your project or any subdirectory.
+The rules are defined in a `.cylintrc.json` configuration file. This file should be located at the root of your project or any subdirectory.
 In there you can select wich rules should be active and also define teh path to your test scripts.
 
 ## Creating new rules
