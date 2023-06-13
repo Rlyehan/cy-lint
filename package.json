@@ -2,7 +2,8 @@
   "name": "cy-lint",
   "version": "0.1.0",
   "description": "A Cypress linting tool for checking adherence to best practices in your test files.",
-  "main": "src/main.ts",
+  "main": "./dist/main.js",
+  "types": "./dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/Rlyehan/cy-lint.git"
@@ -19,6 +20,12 @@
     "url": "https://github.com/Rlyehan/cy-lint/issues"
   },
   "homepage": "https://github.com/Rlyehan/cy-lint#readme",
+  "files": [
+    "dist/"
+  ],
+  "bin": {
+    "cylint": "./dist/main.js"
+  },
   "scripts": {
     "start": "ts-node src/main.ts",
     "build": "tsc",
