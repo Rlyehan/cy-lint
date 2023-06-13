@@ -1,6 +1,6 @@
 {
   "name": "cy-lint",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A Cypress linting tool for checking adherence to best practices in your test files.",
   "main": "./dist/main.js",
   "types": "./dist/index.d.ts",
